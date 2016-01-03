@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Street Value</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+<meta name="description" content="My Street Value Home Valuation">
+<meta name="keywords" content="My Street Value">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta property="og:image" content="">
+<meta property="og:title" content="Want to Know the Value of Your Home?"/>
+<meta property="og:url" content="http://www.mystreetvalue.com"/>
+<meta property="og:description" content="Get the instant & accurate valuation of your home, FREE!"/>
+<link rel="stylesheet" href="normalize.css" />
+<link rel="stylesheet" href="foundation.min.css" />
+<link rel="stylesheet" href="style.css" />
+
+<script src="modernizr.js"></script>
+    <style>
+      
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      .controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        height: 29px;
+        margin: 350px;
+        
+        outline: none;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      .controls:focus {
+        border-color: #4d90fe;
+      }
+
+      </style>
+  </head>
+  <body style="min-height:100vh">
+    <!--Background-->
+    <div class="bground">
+      <div id="pano"></div>
+      <div class="pattern p-03"></div>
+    </div>
+    
+    <!--Step 1-->
+    <section>
+      
+      <div class="vcenter" style="padding-top:100px" id="main">
+  
+              
+        <!--Soon text-->
+        <div class="large-12 soon text-center">
+          Analyze My Property
+        </div>
+        
+        <!--Subsoon text-->
+        <div class="large-12 subsoon text-center" id="change">
+          
+ENTER ADDRESS, GET CURRENT VALUE, & MONTHLY REPORTS 
+        </div>
+        
+        <div class="row">
+  <div class="small-12 large-10 large-centered columns">
+              <form id="geoform" role="form" action="/valuation2/index.php">
+                            <div class="large-7 columns">
+                    <input type="text" name="address" id="geocomplete" placeholder="Enter Your Address">
+                </div>
+              <div class="large-2 columns">
+                    <input type="text" name="unit" id="unit" placeholder="Unit #">
+                </div>  
+                              
+                <div class="large-3 columns">
+                    <button type="submit" id="b1" class="button prefix"><span class="butlabel">GO!</span><span class="spinner"></span></button>
+                </div>
+                        
+        <input name="name" type="hidden" value="">
+
+       
+        <input name="point_of_interest" type="hidden" value="">
+
+       
+        <input name="lat" type="hidden" id="lat" value="">
+
+        
+        <input name="lng" type="hidden" value="">
+
+                <input name="location" type="hidden" value="">
+
+              <input name="location_type" type="hidden" value="">
+
+        
+        <input name="formatted_address" type="hidden" value="" id="snum">
+
+       
+        <input name="bounds" type="hidden" value="">
+
+    
+        <input name="viewport" type="hidden" value="">
+
+     
+        <input name="route" type="hidden" value="">
+
+        <input name="street_number"  type="hidden" value="">
+
+        <input name="postal_code" type="hidden" value="">
+
+  
+        <input name="locality" type="hidden" value="">
+
+        <input name="sublocality" type="hidden" value="">
+
+  
+        <input name="country" type="hidden" value="">
+
+        <input name="country_short" type="hidden" value="">
+
+
+        <input name="administrative_area_level_1" type="hidden" value="">
+
+  
+        <input name="id" type="hidden" value="">
+
+        <input name="reference" type="hidden" value="">
+
+        <input name="url" type="hidden" value="">
+
+        <input name="website" type="hidden" value="">
+
+ <input name="id2" type="hidden" value="1">
+              </form>
+            </div>
+            </div>
+            
+            
+
+        
+        
+          </div>
+          
+
+          
+              
+<p class="large-12 large-centered columns" style="bottom:9px;position:absolute;color:white;font-size:11px;text-align:center">
+              
+    ©2015 Listing Machine, All Rights Reserved. <a href="http://www.listingmachine.com/embed/1" 
+   target="_blank"">Embedding Options</a>
+<br>
+       You received this by testing Listing Machine.  
+              </p>      
+          </section>
+    
+            
+    <div class="loader">
+      <div id="f">
+        <div id="f_1" class="f"></div><div id="f_2" class="f"></div><div id="f_3" class="f"></div><div id="f_4" class="f"></div><div id="f_5" class="f"></div><div id="f_6" class="f"></div><div id="f_7" class="f"></div><div id="f_8" class="f"></div>    
+      </div>
+    </div>
+    <input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location">
+    <div id="map"></div>
+     <h4>Search from the address bar</h4>
+                  <div>
+                      
+                  </div>
+    <script>
+      function initialize() {
+  var map = new google.maps.StreetViewPanorama(document.getElementById('map'), {
+    position: {lat: 45.4214, lng: -75.6919},
+    zoom: 13,
+    mapTypeControl: true,
+  });
+
+  var input = document.getElementById('pac-input');
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  var infowindow = new google.maps.InfoWindow();
+  var marker = new google.maps.Marker({
+    map: map
+  });
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
+///
+  autocomplete.addListener('place_changed', function() {
+    infowindow.close();
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      return;
+    }
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setPosition(place.geometry.location);
+      map.setZoom(1);
+    }
+    // Set the position of the marker using the place ID and location.
+    marker.setPlace({
+      placeId: place.place_id,
+      location: place.geometry.location
+    });
+   marker.setVisible(true);
+ infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+        'Place ID: ' + place.place_id + '<br>' +
+        place.formatted_address);
+    infowindow.open(map, marker);
+  });
+  ///
+
+}
+
+      </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.6.5/jquery.geocomplete.js"></script>
+    <script src="https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyBr8QcEuekkN0Y4AtPHWFD7AoPtSRE4xvE" async defer></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBr8QcEuekkN0Y4AtPHWFD7AoPtSRE4xvE&libraries=places&signed_in=true&callback=initialize"></script>
+  </body>
+</html>
